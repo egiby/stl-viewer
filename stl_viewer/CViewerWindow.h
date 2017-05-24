@@ -1,35 +1,41 @@
 #pragma once
 
+#include <vector>
+
 #include <Windows.h>
 #include "ray_tracing.h"
 
 #include "Common.h"
 #include <gdiplus.h>
+#include <memory>
+#pragma comment (lib,"Gdiplus.lib")
 
 class CViewerWindow {
 public:
 	explicit CViewerWindow( const wchar_t className[] = ViewerClassName, const wchar_t title[] = ViewerMenuName );
 	~CViewerWindow();
-	// Зарегистрировать класс окна
+	// Register window class
 	static ATOM InitWindowClass();
-	// Создать экземпляр окна
-	bool Create( ImageSettings::ImageSettings *);
-	// Показать окно
+	bool Create( ImageSettings::ImageSettings* );
 	void Show( int cmdShow ) const;
+
+	uint32_t GetHeight() const;
+	uint32_t GetWidth() const;
 protected:
 	void OnDestroy() const;
 	Geometry::Point calcPixelCenter( ui32 x, ui32 y ) const;
-	void paint();
+	std::unique_ptr<Gdiplus::Graphics> fill();
 	void OnPaint();
+	void OnResize();
 private:
-	HWND handle; // хэндл окна
-	const wchar_t *className;
-	const wchar_t *title;
-	Gdiplus::Bitmap *bitmap;
-	Gdiplus::CachedBitmap *cBitmap;
+	HWND handle; // window's handle
+	const wchar_t* className;
+	const wchar_t* title;
 
-	ImageSettings::ImageSettings * settings;
-	Calculations::Intersecter * intersecter;
+	ImageSettings::ImageSettings* settings;
+	Calculations::Intersecter* intersecter;
+	
+	std::unique_ptr<Gdiplus::Bitmap> buffer;
 
 	static LRESULT CALLBACK windowProc( HWND handle, UINT message, WPARAM wParam, LPARAM lParam );
 };

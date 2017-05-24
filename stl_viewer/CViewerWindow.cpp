@@ -4,7 +4,7 @@
 
 
 CViewerWindow::CViewerWindow( const wchar_t className[], const wchar_t title[] )
-	: handle( nullptr ), className( className ), title( title ), bitmap( nullptr ), cBitmap( nullptr ) {
+	: handle( nullptr ), className( className ), title( title ) {
 }
 
 CViewerWindow::~CViewerWindow() {
@@ -32,6 +32,11 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 	switch( message ) {
 		case WM_CREATE:
 		{
+			return 0;
+		}
+		case WM_SIZE:
+		{
+			window->OnResize();
 			return 0;
 		}
 		case WM_PAINT:
@@ -63,7 +68,7 @@ ATOM CViewerWindow::InitWindowClass() {
 	wcex.hInstance = NULL;
 	wcex.hIcon = LoadIcon( NULL, IDI_APPLICATION );
 	wcex.hCursor = LoadCursor( NULL, IDC_ARROW );
-	wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+	wcex.hbrBackground = CreateSolidBrush( RGB( 255, 255, 255 ) );
 	wcex.lpszClassName = ViewerClassName;
 	wcex.lpszMenuName = ViewerMenuName;
 	wcex.hIconSm = LoadIcon( NULL, IDI_APPLICATION );
@@ -76,23 +81,34 @@ Geometry::Point CViewerWindow::calcPixelCenter( uint32_t x, uint32_t y ) const {
 		settings->screen.y_basis * (y + 0.5);
 }
 
-void CViewerWindow::paint() {
-	//#pragma omp parallel for num_threads(3)
-	for( int h = 0; h < bitmap->GetHeight(); ++h ) {
-		for( uint32_t w = 0; w < bitmap->GetWidth(); ++w ) {
-			NGeometry::Point pixel = calcPixelCenter( h, w );
-			NGeometry::Ray ray( settings->eye, pixel - settings->eye );
+std::unique_ptr<Gdiplus::Graphics> CViewerWindow::fill() {
+	//	logs << GetHeight() << ' ' << GetWidth() << std::endl;
 
-			auto color = NIntersecter::calcColor( intersecter->intersectAll( ray ), settings, intersecter );
-			bitmap->SetPixel( h, w, Gdiplus::Color( color.red, color.green, color.blue ) );
+	bool need_clear = false;
+	std::unique_ptr<Gdiplus::Graphics> ret;
+	if( !buffer ) {
+		buffer.reset( new Gdiplus::Bitmap( GetWidth(), GetHeight() ) );
+
+		ret.reset( Gdiplus::Graphics::FromImage( buffer.get() ) ) ;
+		ret->Clear( Gdiplus::Color( 0, 0, 0 ) );
+
+		for( uint32_t h = 0; h < buffer->GetHeight(); ++h ) {
+			for( uint32_t w = 0; w < buffer->GetWidth(); ++w ) {
+				NGeometry::Point pixel = calcPixelCenter( w, h );
+				NGeometry::Ray ray( settings->eye, pixel - settings->eye );
+
+				auto color = NIntersecter::calcColor( intersecter->intersectAll( ray ), settings, intersecter );
+				buffer->SetPixel( w, h, Gdiplus::Color( color.red, color.green, color.blue ) );
+			}
 		}
 	}
+	return ret;
 }
 
 bool CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
 	settings = _settings;
 	intersecter = new Calculations::Intersecter( settings );
-	logs << "Settings with " << settings->objects.size() << " polygons added to CViewerWindow" << std::endl;
+	logs << "Settings with " << settings->objects.size() << " objects added to CViewerWindow" << std::endl;
 	handle = CreateWindowEx(
 		0,
 		className,
@@ -112,16 +128,20 @@ bool CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
 		return false;
 	}
 
-	bitmap = new Gdiplus::Bitmap( settings->screen.x_size, settings->screen.y_size, PixelFormat24bppRGB );
-
-	paint();
-
 	return true;
 }
 
 void CViewerWindow::Show( int cmdShow ) const {
 	ShowWindow( handle, cmdShow );
 	UpdateWindow( handle );
+}
+
+uint32_t CViewerWindow::GetHeight() const {
+	return settings->screen.x_size;
+}
+
+uint32_t CViewerWindow::GetWidth() const {
+	return settings->screen.y_size;
 }
 
 void CViewerWindow::OnDestroy() const {
@@ -132,12 +152,21 @@ void CViewerWindow::OnPaint() {
 	PAINTSTRUCT paintStruct;
 	HDC hdc = BeginPaint( handle, &paintStruct );
 
-//	RECT rect;
-//	GetClientRect( handle, &rect );
-
 	Gdiplus::Graphics graphics( hdc );
+	fill();
 
-	graphics.DrawImage( bitmap, 0, 0 );
+	graphics.SetSmoothingMode( Gdiplus::SmoothingModeHighQuality );
+	graphics.DrawImage( buffer.get(), 0, 0 );
 
 	EndPaint( handle, &paintStruct );
+}
+
+void CViewerWindow::OnResize() {
+	RECT rect;
+	GetClientRect( handle, &rect );
+
+	settings->screen.x_size = rect.bottom;
+	settings->screen.y_size = rect.right;
+
+	buffer.reset();
 }

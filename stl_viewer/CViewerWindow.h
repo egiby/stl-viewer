@@ -16,7 +16,7 @@ public:
 	~CViewerWindow();
 	// Register window class
 	static ATOM InitWindowClass( HINSTANCE hInstance = NULL );
-	HWND Create( HWND parent, ImageSettings::ImageSettings* );
+	HWND Create( ImageSettings::ImageSettings* );
 	void Show( int cmdShow ) const;
 
 	uint32_t GetHeight() const;

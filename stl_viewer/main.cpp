@@ -6,7 +6,6 @@
 
 #include "Common.h"
 #include "CViewerWindow.h"
-#include "CControlWindow.h"
 
 int WINAPI wWinMain( HINSTANCE instance,
 	HINSTANCE prevInstance,
@@ -18,15 +17,18 @@ int WINAPI wWinMain( HINSTANCE instance,
 
 	Gdiplus::GdiplusStartup( &gdiplusToken, &gdiplusStartupInput, NULL );
 
-	CControlWindow window;
+	CViewerWindow window;
 
-	if( CControlWindow::InitWindowClass() == 0 ) {
+	if( CViewerWindow::InitWindowClass() == 0 ) {
 		PrintLastError();
 		logs << "init failed" << std::endl;
 		return -1;
 	}
 
-	if( !window.Create() ) {
+	Parsers::DefaultParser parser;
+	auto settings = parser.parseFile( "settings.in" );
+	
+	if( !window.Create(settings) ) {
 		PrintLastError();
 		logs << "create failed" << std::endl;
 		return -1;

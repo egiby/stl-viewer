@@ -64,7 +64,7 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 	}
 }
 
-ATOM CViewerWindow::InitWindowClass(HINSTANCE hInstance) {
+ATOM CViewerWindow::InitWindowClass( HINSTANCE hInstance ) {
 	WNDCLASSEXW wcex = {0};
 
 	wcex.cbSize = sizeof( WNDCLASSEX);
@@ -75,7 +75,7 @@ ATOM CViewerWindow::InitWindowClass(HINSTANCE hInstance) {
 	wcex.hCursor = LoadCursor( NULL, IDC_ARROW );
 	wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_BACKGROUND);
 	wcex.lpszClassName = ViewerClassName;
-//	wcex.lpszMenuName = ViewerMenuName;
+	wcex.lpszMenuName = ViewerMenuName;
 	wcex.hIconSm = LoadIcon( NULL, IDI_APPLICATION );
 
 	return RegisterClassEx( &wcex );
@@ -87,7 +87,6 @@ Geometry::Point CViewerWindow::calcPixelCenter( uint32_t x, uint32_t y ) const {
 }
 
 std::unique_ptr<Gdiplus::Graphics> CViewerWindow::fill() {
-	bool need_clear = false;
 	std::unique_ptr<Gdiplus::Graphics> ret;
 	if( !buffer ) {
 		buffer.reset( new Gdiplus::Bitmap( GetWidth(), GetHeight() ) );
@@ -108,7 +107,7 @@ std::unique_ptr<Gdiplus::Graphics> CViewerWindow::fill() {
 	return ret;
 }
 
-HWND CViewerWindow::Create( HWND parent, ImageSettings::ImageSettings* _settings ) {
+HWND CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
 	settings = _settings;
 	intersecter = new Calculations::Intersecter( settings );
 	logs << "Settings with " << settings->objects.size() << " objects added to CViewerWindow" << std::endl;
@@ -116,12 +115,12 @@ HWND CViewerWindow::Create( HWND parent, ImageSettings::ImageSettings* _settings
 		0,
 		className,
 		title,
-		WS_CHILD | WS_DLGFRAME | WS_VISIBLE,
+		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		parent,
+		NULL,
 		NULL,
 		NULL,
 		reinterpret_cast<LPVOID>(this)
@@ -169,7 +168,7 @@ void CViewerWindow::OnPaint() {
 	fill();
 
 	graphics.SetSmoothingMode( Gdiplus::SmoothingModeHighQuality );
-	graphics.DrawImage( buffer.get(), 0, 0 );
+	graphics.DrawImage( buffer.get(), 200, 0 );
 
 	EndPaint( handle, &paintStruct );
 }

@@ -32,45 +32,50 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 	switch( message ) {
 		case WM_CREATE:
 		{
+			logs << "Viewer: WM_CREATE" << std::endl;
 			return 0;
 		}
 		case WM_SIZE:
 		{
-			window->OnResize();
+			logs << "Viewer: WM_SIZE" << std::endl;
+			RECT rect;
+			GetClientRect( handle, &rect );
+
+			window->Resize( rect.bottom - rect.top, rect.right - rect.left );
 			return 0;
 		}
 		case WM_PAINT:
 		{
+			logs << "Viewer: WM_PAINT" << std::endl;
 			window->OnPaint();
 			return 0;
 		}
 		case WM_DESTROY:
 		{
+			logs << "Viewer: WM_DESTROY" << std::endl;
 			PostQuitMessage( 0 );
 			return 0;
 		}
 		default:
 		{
+			logs << "Viewer: another message" << std::endl;
 			return DefWindowProc( handle, message, wParam, lParam );
 		}
 	}
 }
 
-ATOM CViewerWindow::InitWindowClass() {
-	WNDCLASSEXW wcex;
+ATOM CViewerWindow::InitWindowClass(HINSTANCE hInstance) {
+	WNDCLASSEXW wcex = {0};
 
 	wcex.cbSize = sizeof( WNDCLASSEX);
 
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = windowProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
-	wcex.hInstance = NULL;
-	wcex.hIcon = LoadIcon( NULL, IDI_APPLICATION );
+	wcex.hInstance = hInstance;
 	wcex.hCursor = LoadCursor( NULL, IDC_ARROW );
-	wcex.hbrBackground = CreateSolidBrush( RGB( 255, 255, 255 ) );
+	wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_BACKGROUND);
 	wcex.lpszClassName = ViewerClassName;
-	wcex.lpszMenuName = ViewerMenuName;
+//	wcex.lpszMenuName = ViewerMenuName;
 	wcex.hIconSm = LoadIcon( NULL, IDI_APPLICATION );
 
 	return RegisterClassEx( &wcex );
@@ -82,14 +87,12 @@ Geometry::Point CViewerWindow::calcPixelCenter( uint32_t x, uint32_t y ) const {
 }
 
 std::unique_ptr<Gdiplus::Graphics> CViewerWindow::fill() {
-	//	logs << GetHeight() << ' ' << GetWidth() << std::endl;
-
 	bool need_clear = false;
 	std::unique_ptr<Gdiplus::Graphics> ret;
 	if( !buffer ) {
 		buffer.reset( new Gdiplus::Bitmap( GetWidth(), GetHeight() ) );
 
-		ret.reset( Gdiplus::Graphics::FromImage( buffer.get() ) ) ;
+		ret.reset( Gdiplus::Graphics::FromImage( buffer.get() ) );
 		ret->Clear( Gdiplus::Color( 0, 0, 0 ) );
 
 		for( uint32_t h = 0; h < buffer->GetHeight(); ++h ) {
@@ -105,7 +108,7 @@ std::unique_ptr<Gdiplus::Graphics> CViewerWindow::fill() {
 	return ret;
 }
 
-bool CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
+HWND CViewerWindow::Create( HWND parent, ImageSettings::ImageSettings* _settings ) {
 	settings = _settings;
 	intersecter = new Calculations::Intersecter( settings );
 	logs << "Settings with " << settings->objects.size() << " objects added to CViewerWindow" << std::endl;
@@ -113,22 +116,23 @@ bool CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
 		0,
 		className,
 		title,
-		WS_OVERLAPPEDWINDOW,
+		WS_CHILD | WS_DLGFRAME | WS_VISIBLE,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		NULL,
+		parent,
 		NULL,
 		NULL,
 		reinterpret_cast<LPVOID>(this)
 	);
 
 	if( !handle ) {
-		return false;
+		logs << "Create viewver failed" << std::endl;
+		PrintLastError();
 	}
 
-	return true;
+	return handle;
 }
 
 void CViewerWindow::Show( int cmdShow ) const {
@@ -144,12 +148,21 @@ uint32_t CViewerWindow::GetWidth() const {
 	return settings->screen.y_size;
 }
 
+void CViewerWindow::Resize( uint32_t height, uint32_t width ) {
+	logs << "Viewer resize: " << height << ' ' << width << std::endl;
+	settings->screen.x_size = height;
+	settings->screen.y_size = width;
+
+	buffer.reset();
+}
+
 void CViewerWindow::OnDestroy() const {
 	DestroyWindow( handle );
 }
 
 void CViewerWindow::OnPaint() {
 	PAINTSTRUCT paintStruct;
+	logs << "Viewer paint" << std::endl;
 	HDC hdc = BeginPaint( handle, &paintStruct );
 
 	Gdiplus::Graphics graphics( hdc );
@@ -161,12 +174,3 @@ void CViewerWindow::OnPaint() {
 	EndPaint( handle, &paintStruct );
 }
 
-void CViewerWindow::OnResize() {
-	RECT rect;
-	GetClientRect( handle, &rect );
-
-	settings->screen.x_size = rect.bottom;
-	settings->screen.y_size = rect.right;
-
-	buffer.reset();
-}

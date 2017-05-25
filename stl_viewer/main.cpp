@@ -6,6 +6,7 @@
 
 #include "Common.h"
 #include "CViewerWindow.h"
+#include "CControlWindow.h"
 
 int WINAPI wWinMain( HINSTANCE instance,
 	HINSTANCE prevInstance,
@@ -17,32 +18,17 @@ int WINAPI wWinMain( HINSTANCE instance,
 
 	Gdiplus::GdiplusStartup( &gdiplusToken, &gdiplusStartupInput, NULL );
 
-	CViewerWindow window;
+	CControlWindow window;
 
-	if( CViewerWindow::InitWindowClass() == 0 ) {
+	if( CControlWindow::InitWindowClass() == 0 ) {
 		PrintLastError();
+		logs << "init failed" << std::endl;
 		return -1;
 	}
 
-	Parsers::DefaultParser parser;
-
-	auto settings = parser.parseFile( "settings.in" );
-
-	NGeometry::Point left_bottom_angle = settings->screen.left_bottom_angle;
-	NGeometry::Point left_upper = left_bottom_angle + settings->screen.x_basis * settings->screen.x_size;
-	NGeometry::Point right_bottom = left_bottom_angle + settings->screen.y_basis * settings->screen.y_size;
-	NGeometry::Point right_upper = left_bottom_angle + settings->screen.y_basis * settings->screen.y_size + 
-		settings->screen.x_basis * settings->screen.x_size;
-
-//	settings->light_sources.clear();
-//	settings->light_sources.push_back( { 4000, left_bottom_angle } );
-//	settings->light_sources.push_back( { 4000, left_upper } );
-//	settings->light_sources.push_back( { 2000, right_bottom } );
-//	settings->light_sources.push_back( { 2000, right_upper } );
-//	settings->light_sources.push_back( { 3000, (left_bottom_angle + right_upper) / 2 } );
-
-	if( !window.Create( settings ) ) {
+	if( !window.Create() ) {
 		PrintLastError();
+		logs << "create failed" << std::endl;
 		return -1;
 	}
 

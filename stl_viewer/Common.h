@@ -14,6 +14,8 @@ inline void PrintLastError() {
 }
 
 const wchar_t ViewerClassName[] = L"ViewerClass";
+const wchar_t ControlClassName[] = L"ControlClass";
 const wchar_t ViewerMenuName[] = L"StlViewer";
+const wchar_t ControlMenuName[] = L"StlViewer";
 
 static std::ofstream logs( "log", std::ios::app );

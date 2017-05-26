@@ -15,11 +15,11 @@ public:
 	~CViewerWindow();
 	// Register window class
 	static ATOM InitWindowClass( HINSTANCE hInstance = NULL );
-	HWND Create( ImageSettings::ImageSettings* );
+	HWND Create();
 	void Show( int cmdShow ) const;
 
-	void OnResize();
 protected:
+	void OnResize();
 	void OnDestroy();
 	void OnPaint();
 	void OnCreate();
@@ -27,6 +27,10 @@ private:
 	HWND handle; // window's handle
 	HMENU menu;
 	
+	bool loadFile();
+	OPENFILENAME file;
+	wchar_t filename[256];
+
 	HWND hStartButton;
 	bool startButtonStatus;
 	void flipStartButton();

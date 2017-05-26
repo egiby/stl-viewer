@@ -62,6 +62,9 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 				reinterpret_cast<HINSTANCE>(GetWindowLong( handle, GWL_HINSTANCE )),
 				NULL );
 
+
+			for( int i = 0; window->loadFile() && i < 2; ++i ) {}
+			
 			return 0;
 		}
 		case WM_SIZE:
@@ -139,9 +142,26 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 				case VK_SPACE:
 				{
 					logs << "VK_SPACE" << std::endl;
-					window->painter->Move();
+					window->painter->MoveUp();
 					window->updateView();
 					break;
+				}
+				case VK_RETURN:
+				{
+					window->painter->MoveDown();
+					window->updateView();
+					break;
+				}
+				case VK_ADD:
+				{
+					window->painter->Compress( 0.9 );
+					window->updateView();
+					break;
+				}
+				case VK_SUBTRACT:
+				{
+					window->painter->Compress( 1 / 0.9 );
+					window->updateView();
 				}
 				default:
 				{
@@ -174,9 +194,7 @@ ATOM CViewerWindow::InitWindowClass( HINSTANCE hInstance ) {
 	return RegisterClassEx( &wcex );
 }
 
-HWND CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
-	painter = std::make_unique<CPainter>( _settings );
-	logs << "Settings with " << _settings->objects.size() << " objects added to CViewerWindow" << std::endl;
+HWND CViewerWindow::Create() {
 	handle = CreateWindowEx(
 		0,
 		className,
@@ -218,10 +236,51 @@ void CViewerWindow::OnDestroy() {
 void CViewerWindow::OnPaint() {
 	PAINTSTRUCT paintStruct;
 	logs << "Viewer paint" << std::endl;
+	
 	painter->Paint( handle );
 }
 
 void CViewerWindow::OnCreate() {
+}
+
+bool CViewerWindow::loadFile() {
+	file.lStructSize = sizeof( OPENFILENAME );
+	file.hInstance = reinterpret_cast<HINSTANCE>(GetWindowLong( handle, GWL_HINSTANCE ));
+	file.lpstrFilter = L"Custom\0*.in;\0STL\0*.stl;\0RT\0*.rt;\0All Files\0*.*\0\0";
+	file.lpstrFile = filename;
+	file.nMaxFile = 256;
+	file.lpstrInitialDir = L".\\";
+	file.lpstrDefExt = NULL;
+
+	file.lpstrTitle = L"Open file for viewing";
+	file.Flags = OFN_HIDEREADONLY;
+	if( !GetOpenFileName( &file ) )
+		return true;
+
+	std::wstring extention( filename + file.nFileExtension );
+
+	Parsers::IFileParser * parser = nullptr;
+	if ( extention == L"in" ) {
+		logs << "Ext: in" << std::endl;
+		parser = new Parsers::DefaultParser();
+	}
+	else if ( extention == L"rt" ) {
+		logs << "Ext: rt" << std::endl;
+		parser = new Parsers::RTParser();
+	}
+	else if ( extention == L"stl" ) {
+		logs << "Ext: stl" << std::endl;
+		parser = new Parsers::STLParser();
+	}
+
+	std::ifstream in( filename );
+	auto settings = parser->parse( in );
+
+	in.close();
+	delete parser;
+
+	painter.reset( new CPainter( settings ) );
+	return false;
 }
 
 const wchar_t * getStartButtonText(bool status) {

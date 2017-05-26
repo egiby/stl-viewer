@@ -46,11 +46,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\cube.stl">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="stl_viewer.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>

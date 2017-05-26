@@ -24,11 +24,8 @@ int WINAPI wWinMain( HINSTANCE instance,
 		logs << "init failed" << std::endl;
 		return -1;
 	}
-
-	Parsers::DefaultParser parser;
-	auto settings = parser.parseFile( "settings.in" );
 	
-	if( !window.Create(settings) ) {
+	if( !window.Create() ) {
 		PrintLastError();
 		logs << "create failed" << std::endl;
 		return -1;

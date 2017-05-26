@@ -169,9 +169,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\cube.stl" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="stl_viewer.rc" />
   </ItemGroup>
   <ItemGroup>

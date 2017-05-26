@@ -1,526 +1,386 @@
-Settings with 3 objects added to CViewerWindow
 Viewer: WM_CREATE
+Ext: rt
 Viewer: WM_SIZE
-Viewer resize: 626 925
+Viewer resize: 651 950
 Center: -10 0 0
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
 BN_CLICKED
-Viewer resize: 626 925
+Viewer resize: 651 950
 Center: -10 0 0
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
-WM_KEYDOWN recieved:
-VK: 39
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 39
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
+Eye: 190 3.02 9
+Left bottom angle: -10 -10 -10
+x_basis: 0 0 0.04
+y_basis: 0 0.04 0
 WM_KEYDOWN recieved:
 VK: 37
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 186.157 42.0381 9
+Left bottom angle: -7.45992 -9.74982 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
 WM_KEYDOWN recieved:
 VK: 37
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 174.776 79.5567 9
+Left bottom angle: -5.01746 -9.00891 -10
+x_basis: 0 0 0.04
+y_basis: -0.0153073 0.0369552 0
 WM_KEYDOWN recieved:
-VK: 32
-VK_SPACE
-Move
-Delta: 100 6.50521e-15 -0
-left bottom angle: 90 -10 -10Viewer: WM_PAINT
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 156.294 114.134 9
+Left bottom angle: -2.76648 -7.80573 -10
+x_basis: 0 0 0.04
+y_basis: -0.0222228 0.0332588 0
 WM_KEYDOWN recieved:
 VK: 39
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
+Eye: 174.776 79.5567 9
+Left bottom angle: -5.01746 -9.00891 -10
+x_basis: 0 0 0.04
+y_basis: -0.0153073 0.0369552 0
 WM_KEYDOWN recieved:
 VK: 39
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 186.157 42.0381 9
+Left bottom angle: -7.45992 -9.74982 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 190 3.02 9
+Left bottom angle: -10 -10 -10
+x_basis: 0 0 0.04
+y_basis: 1.73472e-18 0.04 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 186.157 42.0381 9
+Left bottom angle: -7.45992 -9.74982 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 174.776 79.5567 9
+Left bottom angle: -5.01746 -9.00891 -10
+x_basis: 0 0 0.04
+y_basis: -0.0153073 0.0369552 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 156.294 114.134 9
+Left bottom angle: -2.76648 -7.80573 -10
+x_basis: 0 0 0.04
+y_basis: -0.0222228 0.0332588 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 131.421 144.441 9
+Left bottom angle: -0.79347 -6.18653 -10
+x_basis: 0 0 0.04
+y_basis: -0.0282843 0.0282843 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 156.294 114.134 9
+Left bottom angle: -2.76648 -7.80573 -10
+x_basis: 0 0 0.04
+y_basis: -0.0222228 0.0332588 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 174.776 79.5567 9
+Left bottom angle: -5.01746 -9.00891 -10
+x_basis: 0 0 0.04
+y_basis: -0.0153073 0.0369552 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 186.157 42.0381 9
+Left bottom angle: -7.45992 -9.74982 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 190 3.02 9
+Left bottom angle: -10 -10 -10
+x_basis: 0 0 0.04
+y_basis: 2.60209e-18 0.04 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 186.157 -35.9981 9
+Left bottom angle: -12.5401 -9.74982 -10
+x_basis: 0 0 0.04
+y_basis: 0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 190 3.02 9
+Left bottom angle: -10 -10 -10
+x_basis: 0 0 0.04
+y_basis: 2.60209e-18 0.04 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 186.157 42.0381 9
+Left bottom angle: -7.45992 -9.74982 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 13
+Move down
+Delta: 9.80785 1.9509 -0
+left bottom angle: 2.34793 -7.79892 -10Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 195.965 43.989 9
+Left bottom angle: 2.34793 -7.79892 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 13
+Move down
+Delta: 9.80785 1.9509 -0
+left bottom angle: 12.1558 -5.84802 -10Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 205.773 45.9399 9
+Left bottom angle: 12.1558 -5.84802 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 13
+Move down
+Delta: 9.80785 1.9509 -0
+left bottom angle: 21.9636 -3.89711 -10Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 215.581 47.8908 9
+Left bottom angle: 21.9636 -3.89711 -10
+x_basis: 0 0 0.04
+y_basis: -0.00780361 0.0392314 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 204.199 85.4094 9
+Left bottom angle: 24.4061 -3.1562 -10
+x_basis: 0 0 0.04
+y_basis: -0.0153073 0.0369552 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 185.717 119.987 9
+Left bottom angle: 26.6571 -1.95302 -10
+x_basis: 0 0 0.04
+y_basis: -0.0222228 0.0332588 0
+WM_KEYDOWN recieved:
+VK: 37
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 160.845 150.294 9
+Left bottom angle: 28.6301 -0.333821 -10
+x_basis: 0 0 0.04
+y_basis: -0.0282843 0.0282843 0
+WM_KEYDOWN recieved:
+VK: 13
+Move down
+Delta: 7.07107 7.07107 -0
+left bottom angle: 35.7012 6.73725 -10Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 167.916 157.365 9
+Left bottom angle: 35.7012 6.73725 -10
+x_basis: 0 0 0.04
+y_basis: -0.0282843 0.0282843 0
+WM_KEYDOWN recieved:
+VK: 13
+Move down
+Delta: 7.07107 7.07107 -0
+left bottom angle: 42.7722 13.8083 -10Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 174.987 164.436 9
+Left bottom angle: 42.7722 13.8083 -10
+x_basis: 0 0 0.04
+y_basis: -0.0282843 0.0282843 0
+WM_KEYDOWN recieved:
+VK: 109
+compress
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 179.685 159.738 15.6444
+Left bottom angle: 48.4935 8.08704 -5.46667
+x_basis: 0 0 0.0444444
+y_basis: -0.031427 0.031427 0
+WM_KEYDOWN recieved:
+VK: 109
+compress
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 184.906 154.518 23.0272
+Left bottom angle: 54.8505 1.73006 -0.42963
+x_basis: 0 0 0.0493827
+y_basis: -0.0349189 0.0349189 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 209.778 124.21 23.0272
+Left bottom angle: 52.4147 -0.268959 -0.42963
+x_basis: 0 0 0.0493827
+y_basis: -0.0274356 0.0410602 0
+WM_KEYDOWN recieved:
+VK: 39
+axis is normal: 1
+Viewer: WM_PAINT
+Viewer paint
+Viewer paint
+Eye: 228.26 89.6328 23.0272
+Left bottom angle: 49.6357 -1.75436 -0.42963
+x_basis: 0 0 0.0493827
+y_basis: -0.0188979 0.0456237 0
 WM_KEYDOWN recieved:
 VK: 38
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 224.71 88.1622 62.0452
+Left bottom angle: 53.8635 -0.00312992 0.021086
+x_basis: -0.00890074 -0.00368681 0.0484338
+y_basis: -0.0188979 0.0456237 0
 WM_KEYDOWN recieved:
-VK: 40
+VK: 107
+compress
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
-WM_KEYDOWN recieved:
-VK: 38
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 40
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 40
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
+Eye: 226.055 81.5275 68.562
+Left bottom angle: 54.1707 -5.32793 8.83847
+x_basis: -0.00801066 -0.00331813 0.0435905
+y_basis: -0.0170082 0.0410613 0
 WM_KEYDOWN recieved:
 VK: 38
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
-BN_CLICKED
-Viewer resize: 626 925
-Center: -10 0 0
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-BN_CLICKED
-Viewer resize: 626 925
-Center: -10 0 0
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
+Eye: 215.54 77.1721 106.081
+Left bottom angle: 57.8296 -3.81239 10.0398
+x_basis: -0.0157135 -0.00650874 0.0410613
+y_basis: -0.0170082 0.0410613 4.33681e-19
 WM_KEYDOWN recieved:
 VK: 39
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 227.192 39.7654 104.61
+Left bottom angle: 55.3142 -4.55341 8.95976
+x_basis: -0.0157135 -0.00650874 0.0410613
+y_basis: -0.00928046 0.0433379 0.00331813
 WM_KEYDOWN recieved:
-VK: 39
+VK: 107
+compress
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 226.326 33.0586 109.688
+Left bottom angle: 53.4002 -10.1588 16.0965
+x_basis: -0.0141421 -0.00585786 0.0369552
+y_basis: -0.00835241 0.0390041 0.00298631
 WM_KEYDOWN recieved:
-VK: 39
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 39
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 39
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 32
-VK_SPACE
-Move
-Delta: 98.0785 -19.509 0
-left bottom angle: 85.636 -29.2685 -10Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
 VK: 37
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
+Eye: 214.675 70.4652 111.159
+Left bottom angle: 55.664 -9.49187 17.0686
+x_basis: -0.0141421 -0.00585786 0.0369552
+y_basis: -0.0153073 0.0369552 4.33681e-19
 WM_KEYDOWN recieved:
 VK: 38
+axis is normal: 1
 Viewer: WM_PAINT
 Viewer paint
 Viewer paint
-WM_KEYDOWN recieved:
-VK: 40
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 38
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 40
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 39
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-WM_KEYDOWN recieved:
-VK: 37
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
-BN_CLICKED
-Viewer resize: 626 925
-Center: -10 0 0
-Viewer: WM_PAINT
-Viewer paint
-Viewer paint
+Eye: 197.6 63.3925 145.736
+Left bottom angle: 58.6988 -8.23481 18.8244
+x_basis: -0.0205312 -0.0085043 0.0332588
+y_basis: -0.0153073 0.0369552 4.25348e-19
 Viewer: WM_DESTROY
 Viewer: WM_DESTROY
 Viewer: WM_DESTROY

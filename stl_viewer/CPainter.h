@@ -17,13 +17,15 @@ public:
 	void AddSettings( ImageSettings::ImageSettings* );
 	void SetLeftAngle( int x );
 	void Resize( uint32_t height, uint32_t width );
+	void Compress( double coef );
 	void FlipViewer();
 
 	void RotateUp();
 	void RotateDown();
 	void RotateLeft();
 	void RotateRight();
-	void Move();
+	void MoveUp();
+	void MoveDown();
 
 	void Paint( HWND handle );
 
@@ -39,12 +41,15 @@ private:
 	Geometry::Vector normal() const;
 	void recalcEye();
 	void rotateByAxis( Geometry::Vector axis );
+	void move( double len );
 
 	std::unique_ptr<Calculations::Intersecter> intersecter;
 
 	std::unique_ptr<Gdiplus::Bitmap> buffer;
-	int left_angle;
+	int leftAngle;
 	static const double EyeDistance;
+	static const double RotateAngle;
+	static const double Step;
 
 	ImageSettings::Screen initialScreen;
 };

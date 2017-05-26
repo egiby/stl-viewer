@@ -151,13 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Common.cpp" />
+    <ClCompile Include="CPainter.cpp" />
     <ClCompile Include="CViewerWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
     <ClInclude Include="CViewerWindow.h" />
+    <ClInclude Include="CPainter.h" />
     <ClInclude Include="ray_tracing.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\ray_tracing\ray_tracing.vcxproj">
@@ -166,6 +170,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\cube.stl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="stl_viewer.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="toolbar1.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

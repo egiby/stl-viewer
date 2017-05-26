@@ -2,14 +2,14 @@
 
 #include "Common.h"
 
+#include <Windowsx.h>
+
 
 CViewerWindow::CViewerWindow( const wchar_t className[], const wchar_t title[] )
-	: handle( nullptr ), className( className ), title( title ) {
+	: handle( nullptr ), hStartButton( nullptr ), startButtonStatus( false ), className( className ), title( title ) {
 }
 
 CViewerWindow::~CViewerWindow() {
-	delete intersecter;
-	delete settings;
 }
 
 CViewerWindow* pointerByLong( LONG window ) {
@@ -18,6 +18,20 @@ CViewerWindow* pointerByLong( LONG window ) {
 
 LONG longByPointer( CViewerWindow* window ) {
 	return reinterpret_cast<LONG>(window);
+}
+
+RECT CViewerWindow::getViewRect() const {
+	RECT rect;
+	GetWindowRect( handle, &rect );
+	rect.left = 200;
+	rect.top = 0;
+	
+	return rect;
+}
+
+void CViewerWindow::updateView() const {
+	auto rect = getViewRect();
+	InvalidateRect( handle, &rect, TRUE );
 }
 
 LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPARAM lParam ) {
@@ -33,15 +47,31 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 		case WM_CREATE:
 		{
 			logs << "Viewer: WM_CREATE" << std::endl;
+			window->menu = LoadMenu( reinterpret_cast<HINSTANCE>(GetWindowLong( handle, GWL_HINSTANCE )), 
+				L"Menu" );
+			window->hStartButton = CreateWindowEx( 0,
+				L"Button",
+				L"Start view",
+				WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+				10,
+				10,
+				100,
+				100,
+				handle,
+				NULL,
+				reinterpret_cast<HINSTANCE>(GetWindowLong( handle, GWL_HINSTANCE )),
+				NULL );
+
 			return 0;
 		}
 		case WM_SIZE:
 		{
 			logs << "Viewer: WM_SIZE" << std::endl;
-			RECT rect;
-			GetClientRect( handle, &rect );
+			if( wParam == SIZE_MINIMIZED ) 
+				break;
 
-			window->Resize( rect.bottom - rect.top, rect.right - rect.left );
+			window->OnResize();
+
 			return 0;
 		}
 		case WM_PAINT:
@@ -53,12 +83,75 @@ LRESULT CViewerWindow::windowProc( HWND handle, UINT message, WPARAM wParam, LPA
 		case WM_DESTROY:
 		{
 			logs << "Viewer: WM_DESTROY" << std::endl;
+			window->OnDestroy();
 			PostQuitMessage( 0 );
+			return 0;
+		}
+		case WM_COMMAND:
+		{
+			switch ( LOWORD( wParam ) ) {
+				case BN_CLICKED:
+				{
+					logs << "BN_CLICKED" << std::endl;
+					window->flipStartButton();
+					window->painter->SetLeftAngle( 200 );
+					window->painter->FlipViewer();
+					SetFocus( handle );
+
+					window->OnResize();
+					window->updateView();
+					break;
+				}
+				default:
+					break;
+			}
+			return 0;
+		}
+		case WM_KEYDOWN:
+		{
+			logs << "WM_KEYDOWN recieved:" << std::endl;
+			logs << "VK: " << wParam << std::endl;
+			switch( wParam ) {
+				case VK_UP:
+				{
+					window->painter->RotateUp();
+					window->updateView();
+					break;
+				}
+				case VK_DOWN:
+				{
+					window->painter->RotateDown();
+					window->updateView();
+					break;
+				}
+				case VK_RIGHT:
+				{
+					window->painter->RotateRight();
+					window->updateView();
+					break;
+				}
+				case VK_LEFT:
+				{
+					window->painter->RotateLeft();
+					window->updateView();
+					break;
+				}
+				case VK_SPACE:
+				{
+					logs << "VK_SPACE" << std::endl;
+					window->painter->Move();
+					window->updateView();
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
 			return 0;
 		}
 		default:
 		{
-			logs << "Viewer: another message" << std::endl;
 			return DefWindowProc( handle, message, wParam, lParam );
 		}
 	}
@@ -81,36 +174,9 @@ ATOM CViewerWindow::InitWindowClass( HINSTANCE hInstance ) {
 	return RegisterClassEx( &wcex );
 }
 
-Geometry::Point CViewerWindow::calcPixelCenter( uint32_t x, uint32_t y ) const {
-	return settings->screen.left_bottom_angle + settings->screen.x_basis * (x + 0.5) +
-		settings->screen.y_basis * (y + 0.5);
-}
-
-std::unique_ptr<Gdiplus::Graphics> CViewerWindow::fill() {
-	std::unique_ptr<Gdiplus::Graphics> ret;
-	if( !buffer ) {
-		buffer.reset( new Gdiplus::Bitmap( GetWidth(), GetHeight() ) );
-
-		ret.reset( Gdiplus::Graphics::FromImage( buffer.get() ) );
-		ret->Clear( Gdiplus::Color( 0, 0, 0 ) );
-
-		for( uint32_t h = 0; h < buffer->GetHeight(); ++h ) {
-			for( uint32_t w = 0; w < buffer->GetWidth(); ++w ) {
-				NGeometry::Point pixel = calcPixelCenter( w, h );
-				NGeometry::Ray ray( settings->eye, pixel - settings->eye );
-
-				auto color = NIntersecter::calcColor( intersecter->intersectAll( ray ), settings, intersecter );
-				buffer->SetPixel( w, h, Gdiplus::Color( color.red, color.green, color.blue ) );
-			}
-		}
-	}
-	return ret;
-}
-
 HWND CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
-	settings = _settings;
-	intersecter = new Calculations::Intersecter( settings );
-	logs << "Settings with " << settings->objects.size() << " objects added to CViewerWindow" << std::endl;
+	painter = std::make_unique<CPainter>( _settings );
+	logs << "Settings with " << _settings->objects.size() << " objects added to CViewerWindow" << std::endl;
 	handle = CreateWindowEx(
 		0,
 		className,
@@ -126,11 +192,6 @@ HWND CViewerWindow::Create( ImageSettings::ImageSettings* _settings ) {
 		reinterpret_cast<LPVOID>(this)
 	);
 
-	if( !handle ) {
-		logs << "Create viewver failed" << std::endl;
-		PrintLastError();
-	}
-
 	return handle;
 }
 
@@ -139,37 +200,35 @@ void CViewerWindow::Show( int cmdShow ) const {
 	UpdateWindow( handle );
 }
 
-uint32_t CViewerWindow::GetHeight() const {
-	return settings->screen.x_size;
-}
+void CViewerWindow::OnResize() {
+	RECT rect = getViewRect();
+	
+	auto height = rect.bottom - rect.top;
+	auto width = rect.right - rect.left;
 
-uint32_t CViewerWindow::GetWidth() const {
-	return settings->screen.y_size;
-}
-
-void CViewerWindow::Resize( uint32_t height, uint32_t width ) {
 	logs << "Viewer resize: " << height << ' ' << width << std::endl;
-	settings->screen.x_size = height;
-	settings->screen.y_size = width;
-
-	buffer.reset();
+	painter->Resize( height, width );
 }
 
-void CViewerWindow::OnDestroy() const {
+void CViewerWindow::OnDestroy() {
 	DestroyWindow( handle );
+	DestroyMenu( menu );
 }
 
 void CViewerWindow::OnPaint() {
 	PAINTSTRUCT paintStruct;
 	logs << "Viewer paint" << std::endl;
-	HDC hdc = BeginPaint( handle, &paintStruct );
-
-	Gdiplus::Graphics graphics( hdc );
-	fill();
-
-	graphics.SetSmoothingMode( Gdiplus::SmoothingModeHighQuality );
-	graphics.DrawImage( buffer.get(), 200, 0 );
-
-	EndPaint( handle, &paintStruct );
+	painter->Paint( handle );
 }
 
+void CViewerWindow::OnCreate() {
+}
+
+const wchar_t * getStartButtonText(bool status) {
+	return status ? L"End view" : L"Start view";
+}
+
+void CViewerWindow::flipStartButton() {
+	startButtonStatus ^= 1;
+	Button_SetText( hStartButton, getStartButtonText( startButtonStatus ) );
+}

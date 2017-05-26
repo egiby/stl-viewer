@@ -48,8 +48,5 @@ int WINAPI wWinMain( HINSTANCE instance,
 		DispatchMessage( &message );
 	}
 
-
-	Gdiplus::GdiplusShutdown( gdiplusToken );
-
 	return 0;
 }

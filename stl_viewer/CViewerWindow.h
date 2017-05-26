@@ -1,14 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include <Windows.h>
-#include "ray_tracing.h"
 
+#include "ray_tracing.h"
 #include "Common.h"
-#include <gdiplus.h>
-#include <memory>
-#pragma comment (lib,"Gdiplus.lib")
+#include "CPainter.h"
 
 class CViewerWindow {
 public:
@@ -19,23 +18,25 @@ public:
 	HWND Create( ImageSettings::ImageSettings* );
 	void Show( int cmdShow ) const;
 
-	uint32_t GetHeight() const;
-	uint32_t GetWidth() const;
-	void Resize( uint32_t height, uint32_t width );
+	void OnResize();
 protected:
-	void OnDestroy() const;
-	Geometry::Point calcPixelCenter( ui32 x, ui32 y ) const;
-	std::unique_ptr<Gdiplus::Graphics> fill();
+	void OnDestroy();
 	void OnPaint();
+	void OnCreate();
 private:
 	HWND handle; // window's handle
+	HMENU menu;
+	
+	HWND hStartButton;
+	bool startButtonStatus;
+	void flipStartButton();
+	
 	const wchar_t* className;
 	const wchar_t* title;
 
-	ImageSettings::ImageSettings* settings;
-	Calculations::Intersecter* intersecter;
-	
-	std::unique_ptr<Gdiplus::Bitmap> buffer;
+	std::unique_ptr<CPainter> painter;
+	RECT getViewRect() const;
+	void updateView() const;
 
 	static LRESULT CALLBACK windowProc( HWND handle, UINT message, WPARAM wParam, LPARAM lParam );
 };

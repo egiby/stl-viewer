@@ -6,17 +6,20 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-Geometry::Vector normalized(Geometry::Vector v) {
+Geometry::Vector normalized( Geometry::Vector v )
+{
 	return v / NGeometry::abs( v );
 }
 
-void CPainter::FlipViewer() {
+void CPainter::FlipViewer()
+{
 	isViewerVisible ^= 1;
 	settings->screen = initialScreen;
 	buffer.reset();
 }
 
-std::array<Geometry::Vector, 3> getRotateMatrix( Geometry::Vector axis, double angle ) {
+std::array<Geometry::Vector, 3> getRotateMatrix( Geometry::Vector axis, double angle )
+{
 	logs << "axis is normal: " << NDouble::isEqual( NGeometry::abs( axis ), 1 ) << std::endl;
 	auto matrix = std::array<Geometry::Vector, 3>();
 	matrix[0].x = cos( angle ) + (1 - cos( angle )) * axis.x * axis.x;
@@ -32,11 +35,13 @@ std::array<Geometry::Vector, 3> getRotateMatrix( Geometry::Vector axis, double a
 	return matrix;
 }
 
-Geometry::Vector multiply( std::array<Geometry::Vector, 3> matrix, Geometry::Vector vector ) {
+Geometry::Vector multiply( std::array<Geometry::Vector, 3> matrix, Geometry::Vector vector )
+{
 	return {matrix[0] * vector, matrix[1] * vector, matrix[2] * vector};
 }
 
-void CPainter::rotateByAxis( Geometry::Vector axis ) {
+void CPainter::rotateByAxis( Geometry::Vector axis )
+{
 	axis = normalized( axis );
 	auto rotate = getRotateMatrix( axis, RotateAngle );
 
@@ -56,7 +61,8 @@ void CPainter::rotateByAxis( Geometry::Vector axis ) {
 	buffer.reset();
 }
 
-void CPainter::move( double len ) {
+void CPainter::move( double len )
+{
 	Geometry::Vector delta = normal();
 	if( delta * (settings->screen.left_bottom_angle - settings->eye) < 0 ) {
 		delta = -delta;
@@ -72,7 +78,8 @@ void CPainter::move( double len ) {
 	buffer.reset();
 }
 
-void CPainter::RotateUp() {
+void CPainter::RotateUp()
+{
 	if( !isViewerVisible ) {
 		return;
 	}
@@ -80,7 +87,8 @@ void CPainter::RotateUp() {
 	rotateByAxis( -settings->screen.y_basis );
 }
 
-void CPainter::RotateDown() {
+void CPainter::RotateDown()
+{
 	if( !isViewerVisible ) {
 		return;
 	}
@@ -88,7 +96,8 @@ void CPainter::RotateDown() {
 	rotateByAxis( settings->screen.y_basis );
 }
 
-void CPainter::RotateLeft() {
+void CPainter::RotateLeft()
+{
 	if( !isViewerVisible ) {
 		return;
 	}
@@ -96,7 +105,8 @@ void CPainter::RotateLeft() {
 	rotateByAxis( settings->screen.x_basis );
 }
 
-void CPainter::RotateRight() {
+void CPainter::RotateRight()
+{
 	if( !isViewerVisible ) {
 		return;
 	}
@@ -104,22 +114,26 @@ void CPainter::RotateRight() {
 	rotateByAxis( -settings->screen.x_basis );
 }
 
-CPainter::CPainter( ImageSettings::ImageSettings* newSettings)
-: isViewerVisible( false ), leftAngle( 0 ), initialScreen( newSettings->screen ){
+CPainter::CPainter( ImageSettings::ImageSettings* newSettings )
+	: isViewerVisible( false ), leftAngle( 0 ), initialScreen( newSettings->screen )
+{
 	AddSettings( newSettings );
 }
 
-void CPainter::AddSettings( ImageSettings::ImageSettings* newSettings ) {
+void CPainter::AddSettings( ImageSettings::ImageSettings* newSettings )
+{
 	settings.reset( newSettings );
 	intersecter.reset( new Calculations::Intersecter( settings.get() ) );
 	initialScreen = settings->screen;
 }
 
-void CPainter::SetLeftAngle( int x ) {
+void CPainter::SetLeftAngle( int x )
+{
 	leftAngle = x;
 }
 
-void CPainter::Resize( uint32_t height, uint32_t width ) {
+void CPainter::Resize( uint32_t height, uint32_t width )
+{
 	auto center = getCenter();
 	logs << "Center: " << center << std::endl;
 	settings->screen.x_size = height;
@@ -128,7 +142,8 @@ void CPainter::Resize( uint32_t height, uint32_t width ) {
 	buffer.reset();
 }
 
-void CPainter::Compress(double coef) {
+void CPainter::Compress( double coef )
+{
 	logs << "compress" << std::endl;
 	if( !isViewerVisible ) {
 		return;
@@ -138,22 +153,24 @@ void CPainter::Compress(double coef) {
 	settings->screen.x_basis = settings->screen.x_basis * coef;
 	settings->screen.y_basis = settings->screen.y_basis * coef;
 
-	settings->screen.left_bottom_angle = center - 
+	settings->screen.left_bottom_angle = center -
 		(settings->screen.x_basis * GetWidth() + settings->screen.y_basis * GetHeight()) / 2;
 
 	buffer.reset();
 }
 
-void CPainter::MoveUp() {
+void CPainter::MoveUp()
+{
 	logs << "Move up" << std::endl;
-	if ( !isViewerVisible ) {
+	if( !isViewerVisible ) {
 		return;
 	}
 
 	move( Step );
 }
 
-void CPainter::MoveDown() {
+void CPainter::MoveDown()
+{
 	logs << "Move down" << std::endl;
 	if( !isViewerVisible ) {
 		return;
@@ -162,7 +179,8 @@ void CPainter::MoveDown() {
 	move( -Step );
 }
 
-void CPainter::Paint(HWND handle) {
+void CPainter::Paint( HWND handle )
+{
 	PAINTSTRUCT paintStruct;
 	logs << "Viewer paint" << std::endl;
 	HDC hdc = BeginPaint( handle, &paintStruct );
@@ -182,15 +200,18 @@ void CPainter::Paint(HWND handle) {
 	EndPaint( handle, &paintStruct );
 }
 
-uint32_t CPainter::GetHeight() const {
+uint32_t CPainter::GetHeight() const
+{
 	return settings->screen.y_size;
 }
 
-uint32_t CPainter::GetWidth() const {
+uint32_t CPainter::GetWidth() const
+{
 	return settings->screen.x_size;
 }
 
-std::unique_ptr<Gdiplus::Graphics> CPainter::fill() {
+std::unique_ptr<Gdiplus::Graphics> CPainter::fill()
+{
 	std::unique_ptr<Gdiplus::Graphics> ret;
 	if( !buffer ) {
 		buffer.reset( new Gdiplus::Bitmap( GetHeight(), GetWidth() ) );
@@ -211,13 +232,15 @@ std::unique_ptr<Gdiplus::Graphics> CPainter::fill() {
 	return ret;
 }
 
-Geometry::Point CPainter::calcPixelCenter( ui32 x, ui32 y ) const {
+Geometry::Point CPainter::calcPixelCenter( ui32 x, ui32 y ) const
+{
 	return settings->screen.left_bottom_angle + settings->screen.x_basis * (x + 0.5) +
 		settings->screen.y_basis * (y + 0.5);
 }
 
-Geometry::Point CPainter::getCenter() const {
-	return settings->screen.left_bottom_angle + 
+Geometry::Point CPainter::getCenter() const
+{
+	return settings->screen.left_bottom_angle +
 		(settings->screen.x_basis * GetHeight() + settings->screen.y_basis * GetWidth()) / 2.;
 }
 
@@ -226,10 +249,12 @@ const double CPainter::RotateAngle = M_PI / 16;
 const double CPainter::Step = 10.;
 
 
-Geometry::Vector CPainter::normal() const {
+Geometry::Vector CPainter::normal() const
+{
 	return normalized( settings->screen.x_basis ^ settings->screen.y_basis );
 }
 
-void CPainter::recalcEye() {
+void CPainter::recalcEye()
+{
 	settings->eye = getCenter() - normal() * EyeDistance;
 }

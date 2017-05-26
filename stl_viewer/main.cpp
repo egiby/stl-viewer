@@ -45,5 +45,5 @@ int WINAPI wWinMain( HINSTANCE instance,
 		DispatchMessage( &message );
 	}
 
-	return 0;
+	return message.wParam;
 }

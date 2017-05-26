@@ -22,19 +22,25 @@ protected:
 	void OnResize();
 	void OnDestroy();
 	void OnPaint();
-	void OnCreate();
+	void OnButtons( WPARAM wParam, LPARAM lParam );
+	void OnStartButton();
+	void OnLoadButton();
+	void OnKeydown( WPARAM wParam );
 private:
 	HWND handle; // window's handle
 	HMENU menu;
-	
+
 	bool loadFile();
 	OPENFILENAME file;
 	wchar_t filename[256];
 
+	void CreateButtons( HWND newHandle );
 	HWND hStartButton;
 	bool startButtonStatus;
 	void flipStartButton();
-	
+
+	HWND hLoadButton;
+
 	const wchar_t* className;
 	const wchar_t* title;
 
@@ -43,4 +49,7 @@ private:
 	void updateView() const;
 
 	static LRESULT CALLBACK windowProc( HWND handle, UINT message, WPARAM wParam, LPARAM lParam );
+	static const int LeftAngle;
+	static const int StartButtonId;
+	static const int LoadButtonId;
 };
